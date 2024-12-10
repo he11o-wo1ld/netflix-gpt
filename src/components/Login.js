@@ -7,13 +7,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_URL, USER_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -48,7 +47,7 @@ const Login = () => {
           // Updating User Profile
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/83055778?v=4",
+            photoURL: USER_URL,
           })
           .then(() => {
             // Profile updated!
@@ -59,7 +58,6 @@ const Login = () => {
                   displayName: displayName,
                   photoURL: photoURL
               }));
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -84,11 +82,10 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: user.displayName,
-            photoURL: "https://avatars.githubusercontent.com/u/83055778?v=4",
+            photoURL: {USER_URL},
           })
             .then(() => {
               // Profile updated!
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -108,7 +105,7 @@ const Login = () => {
       <Header />
       <img
         className="absolute"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/2bcf01ee-7ef6-4930-b0d5-c6863853c461/web/IN-en-20241125-TRIFECTA-perspective_a47db038-756f-4f26-b1f7-cfc882b98746_large.jpg"
+        src={BACKGROUND_URL}
         alt="logo"
       />
 
